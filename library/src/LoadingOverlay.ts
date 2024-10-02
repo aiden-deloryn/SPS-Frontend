@@ -3,6 +3,7 @@ import { TextOverlay } from '@epicgames-ps/lib-pixelstreamingfrontend-ui-ue5.5';
 export class LoadingOverlay extends TextOverlay {
 
 	private static _rootElement: HTMLElement;
+	private static _videoElement: HTMLElement;
 	private static _textElement: HTMLElement;
 	private static _spinner: HTMLElement;
 
@@ -16,6 +17,26 @@ export class LoadingOverlay extends TextOverlay {
 			LoadingOverlay._rootElement.className = "textDisplayState";
 		}
 		return LoadingOverlay._rootElement;
+	}
+
+	/**
+	 * @returns The created content element of this overlay, which contain whatever content this element contains, like text or a button.
+	 */
+	public static videoElement(): HTMLElement {
+		if (!LoadingOverlay._videoElement) {
+			LoadingOverlay._videoElement = document.createElement('video');
+			LoadingOverlay._videoElement.id = 'loadingOverlayVideo';
+			LoadingOverlay._videoElement.setAttribute("autoplay", "");
+			LoadingOverlay._videoElement.setAttribute("loop", "");
+			LoadingOverlay._videoElement.setAttribute("muted", "");
+			LoadingOverlay._videoElement.setAttribute("playsinline", "");
+
+			const videoSource = document.createElement('source');
+			videoSource.setAttribute("src", "videos/sps_loading_screen_left.mp4");
+			videoSource.setAttribute("type", "video/mp4");
+			LoadingOverlay._videoElement.appendChild(videoSource);
+		}
+		return LoadingOverlay._videoElement;
 	}
 
 	/**
@@ -59,6 +80,8 @@ export class LoadingOverlay extends TextOverlay {
 	 */
 	public constructor(parentElem: HTMLElement) {
 		super(parentElem, LoadingOverlay.rootElement(), LoadingOverlay.textElement());
+
+		LoadingOverlay._rootElement.appendChild(LoadingOverlay.videoElement());
 	}
 
 	/**

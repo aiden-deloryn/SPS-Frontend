@@ -91,6 +91,7 @@ export class SPSApplication extends Application {
 		this.loadingOverlay.update(signallingResp);
 
 		this.currentOverlay = this.loadingOverlay;
+		(LoadingOverlay.videoElement() as HTMLVideoElement).play();
 	}
 
 	/**
