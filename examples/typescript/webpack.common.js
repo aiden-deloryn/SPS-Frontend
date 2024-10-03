@@ -1,4 +1,5 @@
 const path = require('path');
+const CopyPlugin = require("copy-webpack-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 require('dotenv').config({ path: './.env' });
 
@@ -11,6 +12,14 @@ module.exports = {
             title: 'Scalable Pixel Streaming Frontend',
             template: './src/index.html',
             filename: 'index.html'
+        }),
+        new CopyPlugin({
+            patterns: [
+                {
+                    from: "src/assets/animations/*",
+                    to: "animations/[name][ext]",
+                }
+            ],
         }),
     ],
     module: {

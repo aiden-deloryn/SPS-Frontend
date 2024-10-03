@@ -20,6 +20,14 @@
 	text-align: center;
 }
 
+#loadingOverlayAnimation {
+	position: absolute;
+	z-index: -100;
+	width: 25%;
+	height: 25%;
+	top: 30%;
+}
+
 /* Loading spinner */
 .loading-spinner {
 	display: inline-block;

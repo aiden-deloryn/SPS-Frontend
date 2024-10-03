@@ -3,6 +3,7 @@ import { TextOverlay } from '@epicgames-ps/lib-pixelstreamingfrontend-ui-ue5.5';
 export class LoadingOverlay extends TextOverlay {
 
 	private static _rootElement: HTMLElement;
+	private static _animationElement: HTMLElement;
 	private static _textElement: HTMLElement;
 	private static _spinner: HTMLElement;
 
@@ -16,6 +17,22 @@ export class LoadingOverlay extends TextOverlay {
 			LoadingOverlay._rootElement.className = "textDisplayState";
 		}
 		return LoadingOverlay._rootElement;
+	}
+
+	/**
+	 * @returns The created content element of this overlay, which contain whatever content this element contains, like text or a button.
+	 */
+	public static animationElement(): HTMLElement {
+		if (!LoadingOverlay._animationElement) {
+			LoadingOverlay._animationElement = document.createElement('lottie-player');
+			LoadingOverlay._animationElement.id = 'loadingOverlayAnimation';
+			LoadingOverlay._animationElement.setAttribute("src", "animations/loading-spinner.json");
+			LoadingOverlay._animationElement.setAttribute("autoplay", "");
+			LoadingOverlay._animationElement.setAttribute("loop", "");
+			LoadingOverlay._animationElement.setAttribute("background", "transparent");
+			LoadingOverlay._animationElement.setAttribute("speed", "1");
+		}
+		return LoadingOverlay._animationElement;
 	}
 
 	/**
@@ -59,6 +76,8 @@ export class LoadingOverlay extends TextOverlay {
 	 */
 	public constructor(parentElem: HTMLElement) {
 		super(parentElem, LoadingOverlay.rootElement(), LoadingOverlay.textElement());
+
+		LoadingOverlay._rootElement.appendChild(LoadingOverlay.animationElement());
 	}
 
 	/**
